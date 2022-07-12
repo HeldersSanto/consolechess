@@ -6,7 +6,11 @@ namespace xadrez_console
     {
         static void Main(string[] args)
         {
-            Board TAB = new Board(8, 8);
+            Board tab = new Board(8, 8);
+
+            Screen.printBoard(tab);
+
+            Console.ReadLine();
         }
     }
 }

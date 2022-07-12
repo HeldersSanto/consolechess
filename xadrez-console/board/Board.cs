@@ -8,7 +8,7 @@ namespace board
 
         private Piece[,] pieces;
 
-        public Board (int linas, int colunas)
+        public Board (int linhas, int colunas)
         {
             this.linhas = linhas;
             this.colunas = colunas;
@@ -16,5 +16,9 @@ namespace board
             pieces = new Piece[linhas, colunas];
         }
 
+        public Piece piece (int linha, int coluna)
+        {
+            return pieces[linha, coluna];
+        }
     }
 }
