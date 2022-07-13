@@ -20,5 +20,11 @@ namespace board
         {
             return pieces[linha, coluna];
         }
+
+        public void setPiece(Piece piece, Position pos)
+        {
+            pieces[pos.linha, pos.coluna] = piece;
+            piece.position = pos;
+        }
     }
 }

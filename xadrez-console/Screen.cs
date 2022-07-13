@@ -13,11 +13,11 @@ namespace xadrez_console
 
                     if (tab.piece(i, j) == null)
                     {
-                        Console.Write("- ");
+                        Console.Write(" - ");
                     }
                     else
                     {
-                        Console.Write(tab.piece(i, j) + " ");
+                        Console.Write(" " + tab.piece(i, j) + " ");
                     }
                 }
                 Console.WriteLine();
