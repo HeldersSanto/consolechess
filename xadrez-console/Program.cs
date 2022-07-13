@@ -14,6 +14,8 @@ namespace xadrez_console
 
             tab.setPiece(new King(tab, Color.Preta), new Position(0, 0));
             tab.setPiece(new Rook(tab, Color.Preta), new Position(2, 4));
+            tab.setPiece(new Rook(tab, Color.Branca), new Position(3, 0));
+            tab.setPiece(new Rook(tab, Color.Branca), new Position(2, 1));
             Screen.printBoard(tab);
 
             }
