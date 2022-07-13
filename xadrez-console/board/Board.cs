@@ -20,11 +20,41 @@ namespace board
         {
             return pieces[linha, coluna];
         }
+        public Piece piece(Position pos)
+        {
+            return pieces[pos.linha, pos.coluna];
+        }
+
+        public bool hasPiece(Position pos)
+        {
+            validatePosition(pos);
+            return piece(pos) != null;
+        }
 
         public void setPiece(Piece piece, Position pos)
         {
+            if (hasPiece(pos))
+            {
+                throw new BoardException("Ops! Já existe uma peça nessa posição!");
+            }
             pieces[pos.linha, pos.coluna] = piece;
             piece.position = pos;
+        }
+        public bool isValidPosition(Position pos)
+        {
+            if(pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
+            {
+                return false;
+            }
+            return true;
+        }
+            
+        public void validatePosition(Position pos)
+        {
+            if (!isValidPosition(pos))
+            {
+                throw new BoardException("Invalid position!");
+            }
         }
     }
 }

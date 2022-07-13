@@ -7,11 +7,20 @@ namespace xadrez_console
     {
         static void Main(string[] args)
         {
+            try
+            {
+
             Board tab = new Board(8, 8);
 
             tab.setPiece(new King(tab, Color.Preta), new Position(0, 0));
+            tab.setPiece(new Rook(tab, Color.Preta), new Position(2, 4));
             Screen.printBoard(tab);
 
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             Console.ReadLine();
         }
     }
