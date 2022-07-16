@@ -16,5 +16,10 @@ namespace board
             this.board = board;
             this.numberOfMoves = 0;
         }
+
+        public void incNumerOfMoves()
+        {
+            numberOfMoves++;
+        }
     }
 }

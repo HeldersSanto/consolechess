@@ -9,14 +9,24 @@ namespace xadrez_console
         {
             try
             {
+                ChessGame partida = new ChessGame();
 
-            Board tab = new Board(8, 8);
+                while (!partida.gameOver)
+                {
+                    Console.Clear();
+                    Screen.printBoard(partida.board);
 
-            tab.setPiece(new King(tab, Color.Preta), new Position(0, 0));
-            tab.setPiece(new Rook(tab, Color.Preta), new Position(2, 4));
-            tab.setPiece(new Rook(tab, Color.Branca), new Position(3, 0));
-            tab.setPiece(new Rook(tab, Color.Branca), new Position(2, 1));
-            Screen.printBoard(tab);
+                    Console.WriteLine();
+
+                    Console.Write("Origem: ");
+                    Position origin = Screen.readChessPosition().toPosition();
+                    Console.Write("Destino: ");
+                    Position destiny = Screen.readChessPosition().toPosition();
+
+                    partida.execMovement(origin, destiny);
+                }
+
+                Screen.printBoard(partida.board);
 
             }
             catch (BoardException e)

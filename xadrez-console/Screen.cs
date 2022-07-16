@@ -1,5 +1,7 @@
 ﻿using System;
 using board;
+using chess;
+
 namespace xadrez_console
 {
     class Screen
@@ -28,6 +30,15 @@ namespace xadrez_console
             }
             Console.WriteLine("    a  b  c  d  e  f  g  h  ");
         }
+
+        public static ChessPositions readChessPosition()
+        {
+            string position = Console.ReadLine();
+            char column = position[0];
+            int line = int.Parse(position[1] + "");
+
+            return new ChessPositions(column, line);
+        }
         public static void printPiece(Piece piece)
         {
             if(piece.color == Color.Branca)
@@ -37,7 +48,7 @@ namespace xadrez_console
             else
             {
                 ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write(piece);
                 Console.ForegroundColor = aux;
             }
