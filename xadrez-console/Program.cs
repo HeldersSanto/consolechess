@@ -20,6 +20,14 @@ namespace xadrez_console
 
                     Console.Write("Origem: ");
                     Position origin = Screen.readChessPosition().toPosition();
+
+
+                    bool[,] possiblesMoves = partida.board.piece(origin).possiblesMoves();
+
+                    Console.Clear();
+                    Screen.printBoard(partida.board, possiblesMoves);
+
+
                     Console.Write("Destino: ");
                     Position destiny = Screen.readChessPosition().toPosition();
 
