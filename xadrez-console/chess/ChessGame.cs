@@ -6,8 +6,8 @@ namespace chess
     class ChessGame
     {
         public Board board { get; private set; }
-        private int turn;
-        private Color currentPlayer;
+        public int turn { get; private set; }
+        public Color currentPlayer { get; private set; }
         public bool gameOver { get; private set; }
 
         public ChessGame()
@@ -26,7 +26,46 @@ namespace chess
             Piece capturedPiece = board.removePiece(destiny);
             board.setPiece(p, destiny);
         }
+        public void makeMoves(Position origin, Position destiny)
+        {
+            execMovement(origin, destiny);
+            turn++;
+            changePlayer();
+        }
 
+        public void validateOriginPosition(Position pos)
+        {
+            if(board.piece(pos) == null)
+            {
+                throw new BoardException("Não existe peça nessa posição de origem!");
+            }
+            if(currentPlayer != board.piece(pos).color)
+            {
+                throw new BoardException("A peça escolhida não é sua!");
+            }
+            if (!board.piece(pos).hasPossibleMoves()) {
+                throw new BoardException("Não existe movimentos possiveis para essa peça!");
+            }
+        }
+
+        public void validateDestinyPosition(Position origin, Position destiny)
+        {
+            if (!board.piece(origin).canMoveTo(destiny))
+            {
+                throw new BoardException("A peça não pode ser movida ao lugar selecionado!");
+            }
+        }
+        private void changePlayer()
+        {
+            if(currentPlayer == Color.Branca)
+            {
+                currentPlayer = Color.Preta;
+            }
+            else
+            {
+                currentPlayer = Color.Branca;
+            }
+        }
         private void setPieceOnBoard()
         {
             board.setPiece(new Rook(board, Color.Branca), new ChessPositions('c', 1).toPosition());

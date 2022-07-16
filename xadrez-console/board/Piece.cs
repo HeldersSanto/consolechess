@@ -21,6 +21,28 @@ namespace board
         {
             numberOfMoves++;
         }
+
+        public bool hasPossibleMoves()
+        {
+            bool[,] mat = possiblesMoves();
+
+            for (int i = 0; i < board.linhas; i++)
+            {
+                for (int j = 0; j < board.colunas; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool canMoveTo(Position pos)
+        {
+            return possiblesMoves()[pos.linha, pos.coluna];
+        }
         public abstract bool[,] possiblesMoves();
     }
 }

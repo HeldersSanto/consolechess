@@ -13,29 +13,40 @@ namespace xadrez_console
 
                 while (!partida.gameOver)
                 {
-                    Console.Clear();
-                    Screen.printBoard(partida.board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.printBoard(partida.board);
 
-                    Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine($"Turno: {partida.turn}");
+                        Console.WriteLine($"Aguardando jogada: {partida.currentPlayer}");
 
-                    Console.Write("Origem: ");
-                    Position origin = Screen.readChessPosition().toPosition();
+                        Console.WriteLine();
+                        Console.Write("Origem: ");
+                        Position origin = Screen.readChessPosition().toPosition();
+                        partida.validateOriginPosition(origin);
+
+                        bool[,] possiblesMoves = partida.board.piece(origin).possiblesMoves();
+
+                        Console.Clear();
+                        Screen.printBoard(partida.board, possiblesMoves);
 
 
-                    bool[,] possiblesMoves = partida.board.piece(origin).possiblesMoves();
+                        Console.WriteLine();
+                        Console.Write("Destino: ");
+                        Position destiny = Screen.readChessPosition().toPosition();
 
-                    Console.Clear();
-                    Screen.printBoard(partida.board, possiblesMoves);
+                        partida.validateDestinyPosition(origin, destiny);
 
-
-                    Console.Write("Destino: ");
-                    Position destiny = Screen.readChessPosition().toPosition();
-
-                    partida.execMovement(origin, destiny);
+                        partida.makeMoves(origin, destiny);
+                    }
+                    catch (BoardException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
-
-                Screen.printBoard(partida.board);
-
             }
             catch (BoardException e)
             {
