@@ -11,6 +11,7 @@ namespace chess
         public bool gameOver { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
+        public bool check { get; private set; }
 
         public ChessGame()
         {
@@ -20,10 +21,11 @@ namespace chess
             pieces = new HashSet<Piece>();
             capturedPieces = new HashSet<Piece>();
             setPieceOnBoard();
+            check = false;
             gameOver = false;
         }
 
-        public void execMovement(Position origin, Position destiny)
+        public Piece execMovement(Position origin, Position destiny)
         {
             Piece p = board.removePiece(origin);
             p.incNumerOfMoves();
@@ -33,10 +35,36 @@ namespace chess
             {
                 capturedPieces.Add(capturedPiece);
             }
+            return capturedPiece;
+        }
+
+        public void undoMoves(Position origin, Position destiny, Piece capturedPiece)
+        {
+            Piece p = board.removePiece(destiny);
+            p.decNumerOfMoves();
+            if(capturedPiece != null)
+            {
+                board.setPiece(capturedPiece, destiny);
+                capturedPieces.Remove(capturedPiece);
+            }
+            board.setPiece(p, origin);
         }
         public void makeMoves(Position origin, Position destiny)
         {
-            execMovement(origin, destiny);
+            Piece capturedPiece = execMovement(origin, destiny);
+            if (isInCheck(currentPlayer))
+            {
+                undoMoves(origin, destiny, capturedPiece);
+                throw new BoardException("Você não pode se colocar em xeque!");
+            }
+            if (isInCheck(adversaryColor(currentPlayer)))
+            {
+                check = true;
+            }
+            else
+            {
+                check = false;
+            }
             turn++;
             changePlayer();
         }
@@ -104,6 +132,48 @@ namespace chess
             {
                 currentPlayer = Color.Branca;
             }
+        }
+
+        private Color adversaryColor(Color color)
+        {
+            if (color == Color.Branca)
+            {
+                return Color.Amarela;
+            }
+            else
+            {
+                return Color.Branca;
+            }
+        }
+
+        private Piece king(Color color)
+        {
+            foreach(Piece x in piecesInGame(color))
+            {
+                if(x is King)
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
+        
+        public bool isInCheck(Color color)
+        {
+            Piece K = king(color);
+            if(K == null)
+            {
+                throw new BoardException("Não tem rei");
+            }
+            foreach(Piece x in piecesInGame(adversaryColor(color)))
+            {
+                bool[,] mat = x.possiblesMoves();
+                if(mat[K.position.linha, K.position.coluna])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void setNewPiece(char coluna, int linha, Piece piece)

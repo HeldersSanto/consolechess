@@ -21,6 +21,10 @@ namespace board
         {
             numberOfMoves++;
         }
+        public void decNumerOfMoves()
+        {
+            numberOfMoves--;
+        }
 
         public bool hasPossibleMoves()
         {

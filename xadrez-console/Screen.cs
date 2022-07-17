@@ -29,6 +29,10 @@ namespace xadrez_console
             Console.WriteLine();
             Console.WriteLine($"Turno: {partida.turn}");
             Console.WriteLine($"Aguardando jogada: {partida.currentPlayer}");
+            if (partida.check)
+            {
+                Console.WriteLine("EITA... XEQUE!!!");
+            }
         }
         private static void printInfoPartida(ChessGame partida)
         {
