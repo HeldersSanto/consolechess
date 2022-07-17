@@ -28,10 +28,17 @@ namespace xadrez_console
             printInfoPartida(partida);
             Console.WriteLine();
             Console.WriteLine($"Turno: {partida.turn}");
-            Console.WriteLine($"Aguardando jogada: {partida.currentPlayer}");
-            if (partida.check)
+            if (!partida.gameOver)
             {
-                Console.WriteLine("EITA... XEQUE!!!");
+                Console.WriteLine($"Aguardando jogada: {partida.currentPlayer}");
+                if (partida.check)
+                {
+                    Console.WriteLine("EITA... XEQUE!!!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUE MATE! O JOGADOR: " + partida.currentPlayer + " GANHOU A PARTIDA!");
             }
         }
         private static void printInfoPartida(ChessGame partida)

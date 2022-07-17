@@ -42,7 +42,7 @@ namespace chess
         {
             Piece p = board.removePiece(destiny);
             p.decNumerOfMoves();
-            if(capturedPiece != null)
+            if (capturedPiece != null)
             {
                 board.setPiece(capturedPiece, destiny);
                 capturedPieces.Remove(capturedPiece);
@@ -65,8 +65,16 @@ namespace chess
             {
                 check = false;
             }
-            turn++;
-            changePlayer();
+
+            if (testCheckmate(adversaryColor(currentPlayer)))
+            {
+                gameOver = true;
+            }
+            else
+            {
+                turn++;
+                changePlayer();
+            }
         }
 
         public void validateOriginPosition(Position pos)
@@ -148,27 +156,27 @@ namespace chess
 
         private Piece king(Color color)
         {
-            foreach(Piece x in piecesInGame(color))
+            foreach (Piece x in piecesInGame(color))
             {
-                if(x is King)
+                if (x is King)
                 {
                     return x;
                 }
             }
             return null;
         }
-        
+
         public bool isInCheck(Color color)
         {
             Piece K = king(color);
-            if(K == null)
+            if (K == null)
             {
                 throw new BoardException("Não tem rei");
             }
-            foreach(Piece x in piecesInGame(adversaryColor(color)))
+            foreach (Piece x in piecesInGame(adversaryColor(color)))
             {
                 bool[,] mat = x.possiblesMoves();
-                if(mat[K.position.linha, K.position.coluna])
+                if (mat[K.position.linha, K.position.coluna])
                 {
                     return true;
                 }
@@ -176,6 +184,36 @@ namespace chess
             return false;
         }
 
+        public bool testCheckmate(Color color)
+        {
+            if (isInCheck(color))
+            {
+                return false;
+            }
+            foreach (Piece x in piecesInGame(color))
+            {
+                bool[,] mat = x.possiblesMoves();
+                for (int i = 0; i < board.linhas; i++)
+                {
+                    for (int j = 0; j < board.colunas; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = x.position;
+                            Position destiny = new Position(i, j);
+                            Piece capturedPiece = execMovement(origin, destiny);
+                            bool stillInCheck = isInCheck(color);
+                            undoMoves(origin, destiny, capturedPiece);
+                            if (!stillInCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         public void setNewPiece(char coluna, int linha, Piece piece)
         {
             board.setPiece(piece, new ChessPositions(coluna, linha).toPosition());
@@ -184,19 +222,12 @@ namespace chess
         private void setPieceOnBoard()
         {
             setNewPiece('c', 1, new Rook(board, Color.Branca));
-            setNewPiece('c', 2, new Rook(board, Color.Branca));
-            setNewPiece('d', 2, new Rook(board, Color.Branca));
-            setNewPiece('e', 2, new Rook(board, Color.Branca));
-            setNewPiece('e', 1, new Rook(board, Color.Branca));
+            setNewPiece('h', 7, new Rook(board, Color.Branca));
+            setNewPiece('g', 7, new Rook(board, Color.Branca));
             setNewPiece('d', 1, new King(board, Color.Branca));
 
-
-            setNewPiece('c', 7, new Rook(board, Color.Amarela));
-            setNewPiece('c', 8, new Rook(board, Color.Amarela));
-            setNewPiece('d', 7, new Rook(board, Color.Amarela));
-            setNewPiece('e', 7, new Rook(board, Color.Amarela));
-            setNewPiece('e', 8, new Rook(board, Color.Amarela));
-            setNewPiece('d', 8, new King(board, Color.Amarela));
+            
+            setNewPiece('a', 8, new King(board, Color.Amarela));
         }
     }
 }

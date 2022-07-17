@@ -42,6 +42,7 @@ namespace xadrez_console
                         Console.ReadLine();
                     }
                 }
+                Screen.printPartida(partida);
             }
             catch (BoardException e)
             {
