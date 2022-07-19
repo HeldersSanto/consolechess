@@ -221,13 +221,42 @@ namespace chess
         }
         private void setPieceOnBoard()
         {
-            setNewPiece('c', 1, new Rook(board, Color.Branca));
-            setNewPiece('h', 7, new Rook(board, Color.Branca));
-            setNewPiece('g', 7, new Rook(board, Color.Branca));
-            setNewPiece('d', 1, new King(board, Color.Branca));
+            setNewPiece('a', 1, new Rook(board, Color.Branca));
+            setNewPiece('b', 1, new Knight(board, Color.Branca));
+            setNewPiece('c', 1, new Bishop(board, Color.Branca));
+            setNewPiece('d', 1, new Queen(board, Color.Branca));
+            setNewPiece('e', 1, new King(board, Color.Branca));
+            setNewPiece('f', 1, new Bishop(board, Color.Branca));
+            setNewPiece('g', 1, new Knight(board, Color.Branca));
+            setNewPiece('h', 1, new Rook(board, Color.Branca));
 
-            
-            setNewPiece('a', 8, new King(board, Color.Amarela));
+            setNewPiece('a', 2, new Pawn(board, Color.Branca));
+            setNewPiece('b', 2, new Pawn(board, Color.Branca));
+            setNewPiece('c', 2, new Pawn(board, Color.Branca));
+            setNewPiece('d', 2, new Pawn(board, Color.Branca));
+            setNewPiece('e', 2, new Pawn(board, Color.Branca));
+            setNewPiece('f', 2, new Pawn(board, Color.Branca));
+            setNewPiece('g', 2, new Pawn(board, Color.Branca));
+            setNewPiece('h', 2, new Pawn(board, Color.Branca));
+
+
+            setNewPiece('a', 8, new Rook(board, Color.Amarela));
+            setNewPiece('b', 8, new Knight(board, Color.Amarela));
+            setNewPiece('c', 8, new Bishop(board, Color.Amarela));
+            setNewPiece('d', 8, new Queen(board, Color.Amarela));
+            setNewPiece('e', 8, new King(board, Color.Amarela));
+            setNewPiece('f', 8, new Bishop(board, Color.Amarela));
+            setNewPiece('g', 8, new Knight(board, Color.Amarela));
+            setNewPiece('h', 8, new Rook(board, Color.Amarela));
+
+            setNewPiece('a', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('b', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('c', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('d', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('e', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('f', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('g', 7, new Pawn(board, Color.Amarela));
+            setNewPiece('h', 7, new Pawn(board, Color.Amarela));
         }
     }
 }
